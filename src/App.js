@@ -1,28 +1,46 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+
+import Home from './Components/Home';
+import Users from './Components/Users';
+import User from './Components/User';
+import Login from './Components/Login';
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={props => (
+        localStorage.getItem('isLogged') === 'true'
+            ? <Component {...props} />
+            : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+    )} />
+)
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <Router>
+                <div>
+                    <nav>
+                        <ul>
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/users">Users</Link></li>
+                            <li><Link to="/user/1">User Number 1</Link></li>
+                            <li><Link to="/login">Login</Link></li>
+                            <li><Link to="/login" onClick={this.onClickLogout}>Logout</Link></li>
+                        </ul>
+                    </nav>
+
+                    <PrivateRoute path="/" exact component={Home} />
+                    <PrivateRoute path="/users/:pageNumber?" component={Users} />
+                    <PrivateRoute path="/user/:userID" component={User} />
+                    <Route path="/login" component={Login}/>
+                </div>
+            </Router>
+        );
+    }
+    onClickLogout = () => {
+        localStorage.removeItem('isLogged');
+    }
 }
 
 export default App;
