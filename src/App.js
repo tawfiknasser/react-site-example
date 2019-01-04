@@ -7,15 +7,27 @@ import Users from './Components/Users';
 import User from './Components/User';
 import Login from './Components/Login';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => (
-        localStorage.getItem('isLogged') === 'true'
-            ? <Component {...props} />
-            : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+const PrivateRoute = ({ component: Component, render, ...rest }) => (
+    <Route {...rest} render={
+        render?
+        render:
+        props => (localStorage.getItem('isLogged') === 'true' ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     )} />
 )
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            users: {
+                data: [],
+                page: null,
+                perPage: null,
+                total: null,
+                totalPage: null
+            }
+        }
+    }
     render() {
         return (
             <Router>
@@ -31,15 +43,31 @@ class App extends Component {
                     </nav>
 
                     <PrivateRoute path="/" exact component={Home} />
-                    <PrivateRoute path="/users/:pageNumber?" component={Users} />
+
+
+
+                    <PrivateRoute path="/users/:pageNumber?" render={(props)=><Users getUsers={this.getUsers} users={this.state.users} {...props} />}/>
+
+
+
                     <PrivateRoute path="/user/:userID" component={User} />
-                    <Route path="/login" component={Login}/>
+                    <Route path="/login" component={Login} />
                 </div>
             </Router>
         );
     }
     onClickLogout = () => {
         localStorage.removeItem('isLogged');
+    }
+    getUsers = (pageNumber = 1) => {
+        console.error('getUsers');
+        window.fetch('https://reqres.in/api/users?page=' + pageNumber).then((response) => {
+            return response.json();
+        }).then((myJson) => {
+            this.setState({
+                users: myJson
+            })
+        })
     }
 }
 
