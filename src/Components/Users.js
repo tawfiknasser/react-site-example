@@ -2,26 +2,8 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 class Users extends Component {
-  componentDidMount() {
-    let page = 1;
-    if(typeof this.props.match.params.pageNumber !== 'undefined'){
-      page = this.props.match.params.pageNumber;
-    }
-    this.props.getUsers(page);
-  }
-  componentWillUpdate(nextProps,nextState) {
-    this.props.getUsers(nextProps.match.params.pageNumber);
-  }
-  render() {
-    const usersDOM = this.getUsersDOM();
-    const pagesDOM = this.getPagesDOM();
-    return (
-      <div className="Users">
-        <h1>Users:</h1>
-        {usersDOM}
-        {pagesDOM}
-      </div>
-    );
+  componentWillMount(){ 
+    this.props.getUsers(this.pageNumber);
   }
   getUsersDOM() {
     return this.props.users.data.map((value, index) => (
@@ -35,12 +17,32 @@ class Users extends Component {
       let pages = [];
       for (let pageNumber = 1; pageNumber < this.props.users.total_pages; pageNumber++) {
         pages.push(
-          <Link to={'/users/' + pageNumber} key={pageNumber}>{pageNumber}</Link>
+          <Link to={'/users/' + pageNumber} key={pageNumber} onClick={ () => this.handleClickPage(pageNumber) }>{pageNumber}</Link>
         );
       }
       return (<div className="pages">{pages}</div>);
     }
     return;
+  }
+  handleClickPage = (pageNumber) => {
+    if(this.props.users.page !== pageNumber){
+      this.props.getUsers(pageNumber);
+    }
+  }
+  get pageNumber() {
+    let isPageNumber = typeof this.props.match.params.pageNumber !== 'undefined';
+    return (isPageNumber?this.props.match.params.pageNumber:1)
+  }
+  render() {
+    const usersDOM = this.getUsersDOM();
+    const pagesDOM = this.getPagesDOM();
+    return (
+      <div className="Users">
+        <h1>Users:</h1>
+        {usersDOM}
+        {pagesDOM}
+      </div>
+    );
   }
 }
 
