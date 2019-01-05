@@ -17,7 +17,7 @@ class User extends Component {
   render() {
     return (
       <div className="User">
-        <h1>User:</h1>
+        <h1>USER</h1>
         <strong>ID:</strong> <span>{this.props.user.id}</span><br />
         <strong>First Name:</strong> <span>{this.props.user.first_name}</span><br />
         <strong>Last Name:</strong> <span>{this.props.user.last_name}</span><br />

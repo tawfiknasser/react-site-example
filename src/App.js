@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink, Redirect } from "react-router-dom";
 
 import Home from './Components/Home';
 import Users from './Components/Users';
@@ -58,20 +58,22 @@ export default class App extends Component {
         return (
             <Router>
                 <div>
-                    <nav>
+                    <nav className="menu">
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/users">Users</Link></li>
-                            <li><Link to="/user/1">User Number 1</Link></li>
-                            <li><Link to="/login">Login</Link></li>
-                            <li><Link to="/login" onClick={this.handleLogout}>Logout</Link></li>
+                            <li><NavLink exact to="/">Home</NavLink></li>
+                            <li><NavLink to="/users">Users</NavLink></li>
+                            <li><NavLink to="/user/1">User Number 1</NavLink></li>
+                            <li><NavLink to="/login">Login</NavLink></li>
+                            <li><NavLink to="/login" onClick={this.handleLogout}>Logout</NavLink></li>
                         </ul>
                     </nav>
 
-                    <PrivateRoute path="/" exact component={Home} />
-                    <PrivateRoute path="/users/:pageNumber?" component={Users} getUsers={this.getUsers} users={this.state.users} />
-                    <PrivateRoute path="/user/:userID"  component={User} getUser={this.getUser} user={this.state.user} />
-                    <Route path="/login" component={Login} />
+                    <main>
+                        <PrivateRoute path="/" exact component={Home} />
+                        <PrivateRoute path="/users/:pageNumber?" component={Users} getUsers={this.getUsers} users={this.state.users} />
+                        <PrivateRoute path="/user/:userID"  component={User} getUser={this.getUser} user={this.state.user} />
+                        <Route path="/login" component={Login} />
+                    </main>
                 </div>
             </Router>
         );

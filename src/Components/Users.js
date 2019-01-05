@@ -6,11 +6,12 @@ class Users extends Component {
     this.props.getUsers(this.pageNumber);
   }
   getUsersDOM() {
-    return this.props.users.data.map((value, index) => (
-      <div key={value.id}>
+    let usersDom = this.props.users.data.map((value, index) => (
+      <li key={value.id}>
         <Link to={'/user/' + value.id}><strong>{value.id}</strong> {value.first_name} {value.last_name}</Link>
-      </div>
-    ))
+      </li>
+    ));
+    return (<ul className="list">{usersDom}</ul>);
   }
   getPagesDOM() {
     if (this.props.users.total_pages !== null) {
@@ -38,7 +39,7 @@ class Users extends Component {
     const pagesDOM = this.getPagesDOM();
     return (
       <div className="Users">
-        <h1>Users:</h1>
+        <h1>USERS</h1>
         {usersDOM}
         {pagesDOM}
       </div>
