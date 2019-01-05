@@ -12,9 +12,10 @@ const PrivateRoute = ({ component: Component, render, ...rest }) => {
     let renderFunction;
     
     if(isLogged){
-        renderFunction = (render?render:(props) => (<Component {...props} />))
+        if(render) renderFunction = render;
+        else renderFunction = (props) => (<Component {...props} />);
     }else{
-        renderFunction = (props) => (<Redirect to={{ pathname: '/login' }} />);
+        renderFunction = (props) => (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />);
     }
 
     return (
@@ -60,14 +61,12 @@ class App extends Component {
     onClickLogout = () => {
         localStorage.removeItem('isLogged');
     }
-    getUsers = (pageNumber = 1) => {
-        console.error('getUsers');
-        window.fetch('https://reqres.in/api/users?page=' + pageNumber).then((response) => {
-            return response.json();
-        }).then((myJson) => {
-            this.setState({
-                users: myJson
-            })
+    getUsers = async (pageNumber = 1) => {
+        let response = await window.fetch('https://reqres.in/api/users?page=' + pageNumber);
+        let data = await response.json();
+
+        this.setState({
+            users: data
         })
     }
 }

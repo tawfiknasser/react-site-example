@@ -28,33 +28,43 @@ class Login extends Component {
   onChangePassword = (event) => {
     this.setState({ password: event.target.value });
   }
-  onSubmitLogin = (e) => {
+  onSubmitLogin = async (e) => {
     e.preventDefault();
+    
     let body = {
       email: this.state.email,
       password: this.state.password
     }
-    window.fetch('https://reqres.in/api/login', {
+    let requestObject = {
       method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(body)
-    }).then((response) => {
-      return response.json();
-    }).then((myJson) => {
-      if (myJson.token) {
-        localStorage.setItem('isLogged', true);
-        this.props.history.push('/');
-      } else {
-        if (myJson.error) {
-          alert(myJson.error);
-          return false;
-        }
-        alert('email or password wrong!');
+    }
+
+    let response = await window.fetch('https://reqres.in/api/login', requestObject);
+    let data = await response.json();
+
+    if (data.token) {
+      localStorage.setItem('isLogged', true);
+      this.redirectAfterLogin();
+    } else {
+      if (data.error) {
+        alert(data.error);
+        return false;
       }
-    });
+      alert('email or password wrong!');
+    }
+  }
+  redirectAfterLogin() {
+    let redirect  = '/';
+    let isStateExist = typeof this.props.location.state !== 'undefined';
+    if(isStateExist && this.props.location.state.from.pathname){
+      redirect = this.props.location.state.from.pathname;
+    }
+    this.props.history.push(redirect);
   }
 }
 

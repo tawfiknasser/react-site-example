@@ -1,16 +1,16 @@
-import React, { Component,PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-class Users extends PureComponent {
+class Users extends Component {
   componentDidMount() {
-    console.log(this);
-    console.log(this.props.route);
-    console.log(this);
     let page = 1;
     if(typeof this.props.match.params.pageNumber !== 'undefined'){
       page = this.props.match.params.pageNumber;
     }
     this.props.getUsers(page);
+  }
+  componentWillUpdate(nextProps,nextState) {
+    this.props.getUsers(nextProps.match.params.pageNumber);
   }
   render() {
     const usersDOM = this.getUsersDOM();
