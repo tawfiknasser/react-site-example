@@ -7,13 +7,20 @@ import Users from './Components/Users';
 import User from './Components/User';
 import Login from './Components/Login';
 
-const PrivateRoute = ({ component: Component, render, ...rest }) => (
-    <Route {...rest} render={
-        render?
-        render:
-        props => (localStorage.getItem('isLogged') === 'true' ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-    )} />
-)
+const PrivateRoute = ({ component: Component, render, ...rest }) => {
+    let isLogged = localStorage.getItem('isLogged') === 'true';
+    let renderFunction;
+    
+    if(isLogged){
+        renderFunction = (render?render:(props) => (<Component {...props} />))
+    }else{
+        renderFunction = (props) => (<Redirect to={{ pathname: '/login' }} />);
+    }
+
+    return (
+        <Route {...rest} render={renderFunction} />
+    )
+}
 
 class App extends Component {
     constructor(props) {
@@ -43,13 +50,7 @@ class App extends Component {
                     </nav>
 
                     <PrivateRoute path="/" exact component={Home} />
-
-
-
                     <PrivateRoute path="/users/:pageNumber?" render={(props)=><Users getUsers={this.getUsers} users={this.state.users} {...props} />}/>
-
-
-
                     <PrivateRoute path="/user/:userID" component={User} />
                     <Route path="/login" component={Login} />
                 </div>
