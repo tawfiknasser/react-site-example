@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { BrowserRouter as Router, Route, NavLink, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink, Link, Redirect } from "react-router-dom";
 
 import Home from './Components/Home';
 import Users from './Components/Users';
@@ -64,7 +64,7 @@ export default class App extends Component {
                             <li><NavLink to="/users">Users</NavLink></li>
                             <li><NavLink to="/user/1">User Number 1</NavLink></li>
                             <li><NavLink to="/login">Login</NavLink></li>
-                            <li><NavLink to="/login" onClick={this.handleLogout}>Logout</NavLink></li>
+                            <li><Link to="/login" onClick={this.handleLogout}>Logout</Link></li>
                         </ul>
                     </nav>
 

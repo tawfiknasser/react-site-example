@@ -57,12 +57,12 @@ class Login extends Component {
   }
   render() {
     return (
-      <form className="login" onSubmit={this.onSubmitLogin}>
+      <form className="login form" onSubmit={this.onSubmitLogin}>
         <h1>LOGIN</h1>
         <p>Please enter email and password (it does not matter which)</p>
-        <label htmlFor="email">Email:</label> <input id="email" value={this.state.email} onChange={this.onChangeEmail} type="text" placeholder="Email" /><br />
-        <label htmlFor="password">Password:</label> <input id="password" autoComplete="on" value={this.state.password} onChange={this.onChangePassword} type="password" placeholder="Password" /><br />
-        <input type="submit" value="Login" />
+        <div className="form-row"><label htmlFor="email">Email:</label> <input id="email" value={this.state.email} onChange={this.onChangeEmail} type="email" placeholder="Email (it does not matter which)" required /></div>
+        <div className="form-row"><label htmlFor="password">Password:</label> <input id="password" autoComplete="on" value={this.state.password} onChange={this.onChangePassword} type="password" placeholder="Password (it does not matter which)" required /></div>
+        <div className="form-row"><input type="submit" value="Login" /></div>
       </form>
     );
   }
