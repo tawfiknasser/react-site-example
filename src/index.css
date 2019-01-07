@@ -3,7 +3,6 @@ body {
     font-size: 100%;
     margin: 0;
     background: #eee;
-    text-align: center;
 }
 
 * {
@@ -14,10 +13,23 @@ body {
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
+    outline: none;
 }
 
 a {
     text-decoration: none;
+}
+
+main {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 nav.menu {
@@ -41,35 +53,11 @@ nav.menu {
     color: #00a6eb;
 }
 
-main {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-}
-
 h1 {
     color: #00a6eb;
     font-size: 2rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-transform: uppercase;
-}
-
-.list {
-    margin-bottom: 20px;
-}
-
-.list li {
-    display: block;
-}
-
-.list li a{
-    background: #00a6eb;
-    color: #fff;
-    display: block;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
 }
 
 .form {
@@ -102,6 +90,7 @@ h1 {
     background: #00a6eb;
     color: #fff;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .form-row input:not([type="submit"]) {
@@ -113,4 +102,85 @@ h1 {
     width: 30%;
     text-align: left;
     font-weight: bold;
+}
+
+.table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+}
+
+.table td,.table th {
+    padding: .75rem;
+    text-align: left;
+}
+
+.table td {
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    color: #fff;
+    background-color: #00a6eb;
+    border-color: #32383e;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: bold;
+}
+
+.table tbody th {
+    font-weight: bold;
+}
+
+.table tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
+}
+
+.table tbody tr {
+    transition: background-color .2s;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0,0,0,.1);
+}
+
+.button {
+    display: block;
+    width: 100%;
+    background-color: #1e5f8d;
+    border: 1px solid #1e5f8d;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.button:hover,.button:focus,button.active {
+    background-color: #195076;
+    border: 1px solid #195076;
+}
+
+.button:focus,button.active {
+    box-shadow: 0 0 0 0.2rem rgba(30,95,141,.6);
+}
+
+.group-button {
+    display: flex;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.group-button .button:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.group-button .button:last-child {
+    border-radius: 0 10px 10px 0;
 }
