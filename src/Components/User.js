@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 class User extends Component {
   componentDidMount() {
     if (this.userID) {
@@ -17,11 +16,22 @@ class User extends Component {
   render() {
     return (
       <div className="User">
-        <h1>USER</h1>
-        <strong>ID:</strong> <span>{this.props.user.id}</span><br />
-        <strong>First Name:</strong> <span>{this.props.user.first_name}</span><br />
-        <strong>Last Name:</strong> <span>{this.props.user.last_name}</span><br />
-        <strong>Avatar:</strong> <img src={this.props.user.avatar} alt={this.props.user.first_name + ' ' + this.props.user.last_name} />
+        <h1>USER #{this.props.user.id}</h1>
+        <div className="card">
+          <img className="card-img" src={this.props.user.avatar} alt={this.props.user.first_name + ' ' + this.props.user.last_name} />
+          <div className="card-label">
+            <strong>ID</strong> <span>{this.props.user.id}</span>
+          </div>
+          <div className="card-label">
+            <strong>First name</strong> <span>{this.props.user.first_name}</span>
+          </div>
+          <div className="card-label">
+            <strong>Last name</strong> <span>{this.props.user.last_name}</span>
+          </div>
+          <div className="card-label">
+            <strong>URL</strong> <a target="_blank" href={this.props.user.avatar} alt={this.props.user.first_name + ' ' + this.props.user.last_name}>{this.props.user.avatar}</a>
+          </div>
+        </div>
       </div>
     );
   }

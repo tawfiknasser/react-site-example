@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 body {
-    font-family: Arial;
+    font-family: 'Open Sans', sans-serif;
     font-size: 100%;
     margin: 0;
     background: #eee;
@@ -32,30 +34,39 @@ main {
     cursor: pointer;
 }
 
-nav.menu {
+.toolbar {
     background: #fff;
     margin-bottom: 25px;
-    text-align: right;
-    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    line-height: 80px;
+    padding: 0 20px;
 }
 
-.menu li {
+.logo {
+    font-size: 2rem;
+    color: #00a6eb;
+}
+
+.toolbar li {
     display: inline-block;
 }
 
-.menu li a {
+.toolbar li a {
     color: #1e5f8d;
     display: block;
     padding: 10px;
 }
 
-.menu li a.active {
+.toolbar li a.active {
     color: #00a6eb;
 }
 
 h1 {
     color: #00a6eb;
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-bottom: 10px;
     text-transform: uppercase;
 }
@@ -183,4 +194,11 @@ h1 {
 
 .group-button .button:last-child {
     border-radius: 0 10px 10px 0;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0px 0px 5px 0 rgba(0,0,0,.4);
 }

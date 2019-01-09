@@ -58,8 +58,9 @@ export default class App extends Component {
         return (
             <Router>
                 <div>
-                    <nav className="menu">
-                        <ul>
+                    <nav className="toolbar">
+                        <Link className="logo" to="/">React Site Example</Link>
+                        <ul className="menu">
                             <li><NavLink exact to="/">Home</NavLink></li>
                             <li><NavLink to="/users">Users</NavLink></li>
                             <li><NavLink to="/user/1">User Number 1</NavLink></li>
