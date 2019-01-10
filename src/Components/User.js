@@ -18,7 +18,9 @@ class User extends Component {
       <div className="User">
         <h1>USER #{this.props.user.id}</h1>
         <div className="card">
-          <img className="card-img" src={this.props.user.avatar} alt={this.props.user.first_name + ' ' + this.props.user.last_name} />
+          <div className="card-img">
+            <img src={this.props.user.avatar} alt={this.props.user.first_name + ' ' + this.props.user.last_name} />
+          </div>
           <div className="card-label">
             <strong>ID</strong> <span>{this.props.user.id}</span>
           </div>
@@ -27,9 +29,6 @@ class User extends Component {
           </div>
           <div className="card-label">
             <strong>Last name</strong> <span>{this.props.user.last_name}</span>
-          </div>
-          <div className="card-label">
-            <strong>URL</strong> <a target="_blank" href={this.props.user.avatar} alt={this.props.user.first_name + ' ' + this.props.user.last_name}>{this.props.user.avatar}</a>
           </div>
         </div>
       </div>
