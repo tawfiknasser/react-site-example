@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-
 import { BrowserRouter as Router, Route, NavLink, Link, Redirect } from "react-router-dom";
 
 import Home from './Components/Home';
 import Users from './Components/Users';
 import User from './Components/User';
 import Login from './Components/Login';
+import Loader from './Components/Loader';
 
 const PrivateRoute = ({ path, component: Component, ...rest }) => {
     const isLogged = localStorage.getItem('isLogged')
@@ -24,6 +24,7 @@ export default class App extends Component {
         super(props);
 
         this.state = {
+            isLoaderActive: false,
             users: {
                 data: [],
                 page: null,
@@ -43,18 +44,25 @@ export default class App extends Component {
         window.localStorage.removeItem('isLogged');
     }
     getUsers = async (pageNumber = 1) => {
+        this.setState({ isLoaderActive: true })
         let users = await window.fetch(`https://reqres.in/api/users?page=${pageNumber}`);
         users = await users.json();
-        this.setState({ users })
+        this.setState({ users, isLoaderActive: false });
     }
     getUser = async (userID) => {
+        this.setState({ isLoaderActive: true })
         let response = await window.fetch(`https://reqres.in/api/users/${userID}`);
-        let data = await response.json();
-        this.setState({
-            user: data.data
-        })
+        let user = await response.json();
+        this.setState({ user: user.data, isLoaderActive: false });
+    }
+    getLoaderDom() {
+        if(this.state.isLoaderActive === true){
+            return (<Loader />)
+        }
+        return false;
     }
     render() {
+        const LoaderDOM = this.getLoaderDom();
         return (
             <Router>
                 <div>
@@ -70,6 +78,7 @@ export default class App extends Component {
                     </nav>
 
                     <main>
+                        {LoaderDOM}
                         <PrivateRoute path="/" exact component={Home} />
                         <PrivateRoute path="/users/:pageNumber?" component={Users} getUsers={this.getUsers} users={this.state.users} />
                         <PrivateRoute path="/user/:userID"  component={User} getUser={this.getUser} user={this.state.user} />
