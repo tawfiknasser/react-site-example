@@ -24,6 +24,7 @@ export default class App extends Component {
         super(props);
 
         this.state = {
+            apiURL: 'https://reqres.in/api/',
             isLoaderActive: false,
             users: {
                 data: [],
@@ -54,7 +55,7 @@ export default class App extends Component {
             body: JSON.stringify(body)
           }
       
-          let response = await window.fetch('https://reqres.in/api/login', requestObject);
+          let response = await window.fetch(`${this.state.apiURL}login`, requestObject);
           let data = await response.json();
       
           if (data.token) {
@@ -73,13 +74,13 @@ export default class App extends Component {
     }
     getUsers = async (pageNumber = 1) => {
         this.setState({ isLoaderActive: true })
-        let users = await window.fetch(`https://reqres.in/api/users?page=${pageNumber}`);
+        let users = await window.fetch(`${this.state.apiURL}users?page=${pageNumber}`);
         users = await users.json();
         this.setState({ users, isLoaderActive: false });
     }
     getUser = async (userID) => {
         this.setState({ isLoaderActive: true })
-        let response = await window.fetch(`https://reqres.in/api/users/${userID}`);
+        let response = await window.fetch(`${this.state.apiURL}users/${userID}`);
         let user = await response.json();
         this.setState({ user: user.data, isLoaderActive: false });
     }
