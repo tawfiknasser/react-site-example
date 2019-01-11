@@ -40,6 +40,34 @@ export default class App extends Component {
             }
         }
     }
+    handleLogin = async (email,password,redirect) => {
+        let body = {
+            email: email,
+            password: password
+          }
+          let requestObject = {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+          }
+      
+          let response = await window.fetch('https://reqres.in/api/login', requestObject);
+          let data = await response.json();
+      
+          if (data.token) {
+            localStorage.setItem('isLogged', true);
+            this.props.history.push(redirect);
+          } else {
+            if (data.error) {
+              alert(data.error);
+              return false;
+            }
+            alert('email or password wrong!');
+          }
+    }
     handleLogout = () => {
         window.localStorage.removeItem('isLogged');
     }
@@ -64,28 +92,26 @@ export default class App extends Component {
     render() {
         const LoaderDOM = this.getLoaderDom();
         return (
-            <Router>
-                <div>
-                    <nav className="toolbar">
-                        <Link className="logo" to="/">React Site Example</Link>
-                        <ul className="menu">
-                            <li><NavLink exact to="/">Home</NavLink></li>
-                            <li><NavLink to="/users">Users</NavLink></li>
-                            <li><NavLink to="/user/1">User Number 1</NavLink></li>
-                            <li><NavLink to="/login">Login</NavLink></li>
-                            <li><Link to="/login" onClick={this.handleLogout}>Logout</Link></li>
-                        </ul>
-                    </nav>
+            <div className="app">
+                <nav className="toolbar">
+                    <Link className="logo" to="/">React Site Example</Link>
+                    <ul className="menu">
+                        <li><NavLink exact to="/">Home</NavLink></li>
+                        <li><NavLink to="/users">Users</NavLink></li>
+                        <li><NavLink to="/user/1">User Number 1</NavLink></li>
+                        <li><NavLink to="/login">Login</NavLink></li>
+                        <li><Link to="/login" onClick={this.handleLogout}>Logout</Link></li>
+                    </ul>
+                </nav>
 
-                    <main>
-                        {LoaderDOM}
-                        <PrivateRoute path="/" exact component={Home} />
-                        <PrivateRoute path="/users/:pageNumber?" component={Users} getUsers={this.getUsers} users={this.state.users} />
-                        <PrivateRoute path="/user/:userID"  component={User} getUser={this.getUser} user={this.state.user} />
-                        <Route path="/login" component={Login} />
-                    </main>
-                </div>
-            </Router>
+                <main>
+                    {LoaderDOM}
+                    <PrivateRoute path="/" exact component={Home} />
+                    <PrivateRoute path="/users/:pageNumber?" component={Users} getUsers={this.getUsers} users={this.state.users} />
+                    <PrivateRoute path="/user/:userID"  component={User} getUser={this.getUser} user={this.state.user} />
+                    <Route path="/login" render={(props)=><Login {...props} handleLogin={this.handleLogin} />} />
+                </main>
+            </div>
         );
     }
 }

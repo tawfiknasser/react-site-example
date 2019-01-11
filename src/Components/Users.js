@@ -62,7 +62,7 @@ class Users extends Component {
     const usersDOM = this.getUsersDOM();
     const pagesDOM = this.getPagesDOM();
     return (
-      <div className="Users">
+      <div className="users">
         <h1>USERS</h1>
         {usersDOM}
         {pagesDOM}

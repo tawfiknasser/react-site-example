@@ -15,7 +15,7 @@ class User extends Component {
   }
   render() {
     return (
-      <div className="User">
+      <div className="user">
         <h1>USER #{this.props.user.id}</h1>
         <div className="card">
           <div className="card-img">

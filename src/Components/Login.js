@@ -17,43 +17,19 @@ class Login extends Component {
   onChangePassword = (event) => {
     this.setState({ password: event.target.value });
   }
-  onSubmitLogin = async (e) => {
+  onSubmitLogin = (e) => {
     e.preventDefault();
-    
-    let body = {
-      email: this.state.email,
-      password: this.state.password
-    }
-    let requestObject = {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    }
-
-    let response = await window.fetch('https://reqres.in/api/login', requestObject);
-    let data = await response.json();
-
-    if (data.token) {
-      localStorage.setItem('isLogged', true);
-      this.redirectAfterLogin();
-    } else {
-      if (data.error) {
-        alert(data.error);
-        return false;
-      }
-      alert('email or password wrong!');
-    }
+    this.props.handleLogin(this.state.email,this.state.password,this.redirectAfterLogin);
   }
-  redirectAfterLogin() {
+  get redirectAfterLogin() {
+    const isStateExist = typeof this.props.location.state !== 'undefined';
+
     let redirect  = '/';
-    let isStateExist = typeof this.props.location.state !== 'undefined';
     if(isStateExist && this.props.location.state.from.pathname){
       redirect = this.props.location.state.from.pathname;
     }
-    this.props.history.push(redirect);
+
+    return redirect;
   }
   render() {
     return (
