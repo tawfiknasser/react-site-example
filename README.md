@@ -1,5 +1,5 @@
 # React site example
-* Site example with react + react-router + redux
+* Site example with react + react-router
 
 ## API
 * The project uses the API of the site https://reqres.in/
