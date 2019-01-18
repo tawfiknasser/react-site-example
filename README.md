@@ -1,6 +1,9 @@
 # React site example
 * Site example with react + react-router
 
+## Screenshots
+![screenshots](https://raw.githubusercontent.com/LiorRabinovich/react-site-example/master/screenshots/screenshots.gif)
+
 ## API
 * The project uses the API of the site https://reqres.in/
 
